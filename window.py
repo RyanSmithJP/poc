@@ -29,7 +29,7 @@ def drawWindow():
         glfw.swap_buffers(window) #Prevents flickering
     #Close on exit
     glfw.terminate()
-    glfw.destroy_cursor()
+    glfw.destroy_cursor(cursor)
 class CursorInBounds:
     def __init__(self):
         self.cursor_in_bounds=False
