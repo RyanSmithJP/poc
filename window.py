@@ -1,6 +1,7 @@
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import *
+points = []
 def drawWindow():
     #Initilise GLFW and Window
     if not glfw.init():
@@ -32,7 +33,8 @@ def drawWindow():
         # if(myCursor.myCursor==True):
         #     print("y")
         glBegin(GL_POINTS)
-        glVertex2f(25,25)
+        for i in points:
+            glVertex2f(i[0],i[1])
         glEnd()
         glfw.poll_events() #Input
         glfw.swap_buffers(window) #Prevents flickering
@@ -55,6 +57,7 @@ class MyCursor:
         if(button==glfw.MOUSE_BUTTON_LEFT and action==glfw.PRESS):
             print(self.xpos," ",self.ypos)
             glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
+            points.append((self.xpos,self.ypos))
             # if(myCursor.myCursor==True):
             #     print("y")
             # glColor3f(1,0,0)
