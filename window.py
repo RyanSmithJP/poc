@@ -12,7 +12,7 @@ def drawWindow():
         glfw.terminate()
         print("Window can't be created")
         exit()
-        
+
     def onInit():
         glfw.make_context_current(window) #OpenGL can use this now
         glClearColor(1,1,1,1)
@@ -21,7 +21,8 @@ def drawWindow():
         glLoadIdentity()
         gluOrtho2D(0, 600, 600, 0)  #Set up a 2D orthographic projection for drawing points
         glColor3f(1,0,0)
-        glPointSize(10.0)
+        glPointSize(20.0)
+        glEnable(GL_POINT_SMOOTH)
 
         glfw.set_cursor_enter_callback(window,myCursor.cursorCallback)
         glfw.set_cursor_pos_callback(window,myCursor.cursorPosCallback)
