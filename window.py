@@ -48,6 +48,7 @@ class MyCursor:
         self.xpos = 0
         self.ypos = 0
         self.points = [] #List of co-ords
+        self.lastPoint = None
     def cursorCallback(self,window,entered): #If cursor on screen
         if(entered):
             self.myCursor=True
@@ -58,8 +59,10 @@ class MyCursor:
         self.ypos=y
     def drawPoint(self,window,button,action,mods):
         if(button==glfw.MOUSE_BUTTON_LEFT and action==glfw.PRESS):
+            print(self.lastPoint)
             print(self.xpos," ",self.ypos)
             glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
             self.points.append((self.xpos,self.ypos))
+            self.lastPoint = self.points[-1] #save most recent one
             # if(myCursor.myCursor==True):
             #     print("y")
