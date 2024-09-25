@@ -36,17 +36,19 @@ def drawWindow():
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
         # if(myCursor.myCursor==True):
         #     print("y")
+        #Draw points then lines
         lastPoint = None
+        glBegin(GL_POINTS)
         for i in myCursor.points:
-            glBegin(GL_POINTS)
             glVertex2f(i[0],i[1])
-            glEnd()
+        glEnd()
+        glBegin(GL_LINES)
+        for i in myCursor.points:
             if lastPoint:
-                glBegin(GL_LINES)
                 glVertex2f(lastPoint[0],lastPoint[1])
                 glVertex2f(i[0],i[1])
-                glEnd()
             lastPoint = i
+        glEnd()
         glfw.poll_events() #Input
         glfw.swap_buffers(window) #Prevents flickering
     #Close on exit
