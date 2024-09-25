@@ -21,7 +21,7 @@ def drawWindow():
     glLoadIdentity()
     gluOrtho2D(0, 600, 600, 0)  #Set up a 2D orthographic projection for drawing points
     glColor3f(1,0,0)
-    glPointSize(50.0)
+    glPointSize(10.0)
 
     glfw.set_cursor_enter_callback(window,myCursor.cursorCallback)
     glfw.set_cursor_pos_callback(window,myCursor.cursorPosCallback)
@@ -33,7 +33,7 @@ def drawWindow():
         # if(myCursor.myCursor==True):
         #     print("y")
         glBegin(GL_POINTS)
-        for i in points:
+        for i in myCursor.points:
             glVertex2f(i[0],i[1])
         glEnd()
         glfw.poll_events() #Input
@@ -45,6 +45,7 @@ class MyCursor:
         self.myCursor=False
         self.xpos = 0
         self.ypos = 0
+        self.points = []
     def cursorCallback(self,window,entered): #If cursor on screen
         if(entered):
             self.myCursor=True
@@ -57,7 +58,7 @@ class MyCursor:
         if(button==glfw.MOUSE_BUTTON_LEFT and action==glfw.PRESS):
             print(self.xpos," ",self.ypos)
             glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
-            points.append((self.xpos,self.ypos))
+            self.points.append((self.xpos,self.ypos))
             # if(myCursor.myCursor==True):
             #     print("y")
             # glColor3f(1,0,0)
