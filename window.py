@@ -12,20 +12,22 @@ def drawWindow():
         glfw.terminate()
         print("Window can't be created")
         exit()
+        
+    def onInit():
+        glfw.make_context_current(window) #OpenGL can use this now
+        glClearColor(1,1,1,1)
+        glViewport(0,0,600,600)
+        glMatrixMode(GL_PROJECTION) #2D axis
+        glLoadIdentity()
+        gluOrtho2D(0, 600, 600, 0)  #Set up a 2D orthographic projection for drawing points
+        glColor3f(1,0,0)
+        glPointSize(10.0)
 
-    glfw.make_context_current(window) #OpenGL can use this now
-    glClearColor(1,1,1,1)
-    glViewport(0,0,600,600)
-    glMatrixMode(GL_PROJECTION) #2D axis
-    glLoadIdentity()
-    gluOrtho2D(0, 600, 600, 0)  #Set up a 2D orthographic projection for drawing points
-    glColor3f(1,0,0)
-    glPointSize(10.0)
+        glfw.set_cursor_enter_callback(window,myCursor.cursorCallback)
+        glfw.set_cursor_pos_callback(window,myCursor.cursorPosCallback)
+        glfw.set_mouse_button_callback(window,myCursor.drawPoint)
 
-    glfw.set_cursor_enter_callback(window,myCursor.cursorCallback)
-    glfw.set_cursor_pos_callback(window,myCursor.cursorPosCallback)
-    glfw.set_mouse_button_callback(window,myCursor.drawPoint)
-
+    onInit()
     #Loop window
     while not glfw.window_should_close(window):
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
@@ -44,7 +46,7 @@ class MyCursor:
         self.myCursor=False
         self.xpos = 0
         self.ypos = 0
-        self.points = []
+        self.points = [] #List of co-ords
     def cursorCallback(self,window,entered): #If cursor on screen
         if(entered):
             self.myCursor=True
@@ -60,7 +62,3 @@ class MyCursor:
             self.points.append((self.xpos,self.ypos))
             # if(myCursor.myCursor==True):
             #     print("y")
-            # glColor3f(1,0,0)
-            # glBegin(GL_POINTS)
-            # glVertex2f(100,50)
-            # glEnd()
