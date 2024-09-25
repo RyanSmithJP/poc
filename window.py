@@ -1,7 +1,6 @@
 import glfw
 from OpenGL.GL import *
 from OpenGL.GLU import *
-points = []
 def drawWindow():
     #Initilise GLFW and Window
     if not glfw.init():
