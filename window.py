@@ -22,7 +22,9 @@ def drawWindow():
         gluOrtho2D(0, 600, 600, 0)  #Set up a 2D orthographic projection for drawing points
         glColor3f(1,0,0)
         glPointSize(20.0)
-        glEnable(GL_POINT_SMOOTH)
+        glEnable(GL_POINT_SMOOTH) #Circle points
+
+        glLineWidth(5.0)
 
         glfw.set_cursor_enter_callback(window,myCursor.cursorCallback)
         glfw.set_cursor_pos_callback(window,myCursor.cursorPosCallback)
@@ -34,10 +36,17 @@ def drawWindow():
         glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
         # if(myCursor.myCursor==True):
         #     print("y")
-        glBegin(GL_POINTS)
+        lastPoint = None
         for i in myCursor.points:
+            glBegin(GL_POINTS)
             glVertex2f(i[0],i[1])
-        glEnd()
+            glEnd()
+            if lastPoint:
+                glBegin(GL_LINES)
+                glVertex2f(lastPoint[0],lastPoint[1])
+                glVertex2f(i[0],i[1])
+                glEnd()
+            lastPoint = i
         glfw.poll_events() #Input
         glfw.swap_buffers(window) #Prevents flickering
     #Close on exit
@@ -48,7 +57,6 @@ class MyCursor:
         self.xpos = 0
         self.ypos = 0
         self.points = [] #List of co-ords
-        self.lastPoint = None
     def cursorCallback(self,window,entered): #If cursor on screen
         if(entered):
             self.myCursor=True
@@ -59,10 +67,8 @@ class MyCursor:
         self.ypos=y
     def drawPoint(self,window,button,action,mods):
         if(button==glfw.MOUSE_BUTTON_LEFT and action==glfw.PRESS):
-            print(self.lastPoint)
             print(self.xpos," ",self.ypos)
             glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT) #Clear window
             self.points.append((self.xpos,self.ypos))
-            self.lastPoint = self.points[-1] #save most recent one
             # if(myCursor.myCursor==True):
             #     print("y")
